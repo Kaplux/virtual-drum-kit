@@ -107,7 +107,6 @@ public class DrumViewActivity extends Activity {
 		// Add the adView to it
 		layout.addView(adView,adsParams);
 		AdRequest ar = new AdRequest();
-		ar.addTestDevice(AdRequest.TEST_EMULATOR);
 		// Initiate a generic request to load it with an ad
 		adView.loadAd(ar);
 
