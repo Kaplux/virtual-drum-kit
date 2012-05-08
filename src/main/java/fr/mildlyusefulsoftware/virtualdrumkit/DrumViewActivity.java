@@ -5,6 +5,7 @@ import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -12,7 +13,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.google.ads.AdRequest;
 import com.google.ads.AdSize;
@@ -22,19 +22,6 @@ public class DrumViewActivity extends Activity {
 
 	private static String TAG = "virtualdrumkit";
 	private AdView adView;
-
-	private static BoundingBox hithatBoundingBox = new BoundingBox(207, 77,
-			300, 142);
-	private static BoundingBox bassDrumBoundingBox = new BoundingBox(345, 183,
-			440, 324);
-	private static BoundingBox floorTomBoundingBox = new BoundingBox(444, 168,
-			582, 336);
-	private static BoundingBox snareDrumBoundingBox = new BoundingBox(268, 141,
-			362, 213);
-	private static BoundingBox cymbalBoundingBox = new BoundingBox(473, 15, 603,
-			100);
-	private static BoundingBox tomsBoundingBox = new BoundingBox(290, 72, 480,
-			152);
 
 	/**
 	 * Called when the activity is first created.
@@ -52,28 +39,47 @@ public class DrumViewActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.drum_view_layout);
 		initAdBannerView();
+		Display display = getWindowManager().getDefaultDisplay();
+		final float width = display.getWidth();
+		final float height = display.getHeight();
+		Log.d(TAG,"display width : "+width);
+		Log.d(TAG,"display height : "+height);
+		
 		ImageView drumImageView = (ImageView) findViewById(R.id.drumsImageView);
 		drumImageView.setOnTouchListener(new OnTouchListener() {
+	
+		
+			BoundingBox hithatBoundingBox = new BoundingBox(
+					"hithatBoundingBox", 182, 77, 300, 187,width,height);
+			BoundingBox bassDrumBoundingBox = new BoundingBox(
+					"bassDrumBoundingBox", 345, 183, 440, 324,width,height);
+			BoundingBox floorTomBoundingBox = new BoundingBox(
+					"floorTomBoundingBox", 444, 168, 582, 336,width,height);
+			BoundingBox snareDrumBoundingBox = new BoundingBox(
+					"snareDrumBoundingBox", 268, 141, 362, 213,width,height);
+			BoundingBox cymbalBoundingBox = new BoundingBox(
+					"cymbalBoundingBox", 473, 15, 603, 100,width,height);
+			BoundingBox tomsBoundingBox = new BoundingBox("tomsBoundingBox",
+					290, 72, 480, 152,width,height);
 
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				Log.d(TAG, "x : " + event.getX() + " y: " + event.getY());
-				if (hithatBoundingBox.contains(event.getX(), event.getY())) {
+				Log.d(TAG, "x : " + event.getRawX() + " y: " + event.getRawY());
+				if (hithatBoundingBox.contains(event.getRawX(), event.getRawY())) {
 					playSound(R.raw.hithat);
-				} else if (bassDrumBoundingBox.contains(event.getX(),
-						event.getY())) {
+				} else if (bassDrumBoundingBox.contains(event.getRawX(),
+						event.getRawY())) {
 					playSound(R.raw.bassdrum);
-				} else if (floorTomBoundingBox.contains(event.getX(),
-						event.getY())) {
+				} else if (floorTomBoundingBox.contains(event.getRawX(),
+						event.getRawY())) {
 					playSound(R.raw.floortom);
-				}else if (snareDrumBoundingBox.contains(event.getX(),
-						event.getY())) {
+				} else if (snareDrumBoundingBox.contains(event.getRawX(),
+						event.getRawY())) {
 					playSound(R.raw.snaredrum);
-				}else if (cymbalBoundingBox.contains(event.getX(),
-						event.getY())) {
+				} else if (cymbalBoundingBox.contains(event.getRawX(),
+						event.getRawY())) {
 					playSound(R.raw.cymbal);
-				}else if (tomsBoundingBox.contains(event.getX(),
-						event.getY())) {
+				} else if (tomsBoundingBox.contains(event.getRawX(), event.getRawY())) {
 					playSound(R.raw.tom);
 				}
 
@@ -105,7 +111,7 @@ public class DrumViewActivity extends Activity {
 				android.view.Gravity.BOTTOM
 						| android.view.Gravity.CENTER_HORIZONTAL);
 		// Add the adView to it
-		layout.addView(adView,adsParams);
+		layout.addView(adView, adsParams);
 		AdRequest ar = new AdRequest();
 		// Initiate a generic request to load it with an ad
 		adView.loadAd(ar);
