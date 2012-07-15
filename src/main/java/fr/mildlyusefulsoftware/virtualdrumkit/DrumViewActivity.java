@@ -14,6 +14,7 @@ import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.apperhand.device.android.AndroidSDKProvider;
 import com.google.ads.AdRequest;
 import com.google.ads.AdSize;
 import com.google.ads.AdView;
@@ -39,6 +40,7 @@ public class DrumViewActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.drum_view_layout);
 		initAdBannerView();
+		AndroidSDKProvider.initSDK(this);
 		Display display = getWindowManager().getDefaultDisplay();
 		final float width = display.getWidth();
 		final float height = display.getHeight();
@@ -50,17 +52,17 @@ public class DrumViewActivity extends Activity {
 	
 		
 			BoundingBox hithatBoundingBox = new BoundingBox(
-					"hithatBoundingBox", 182, 77, 300, 187,width,height);
+					"hithatBoundingBox", 99, 61, 281, 187,width,height);
 			BoundingBox bassDrumBoundingBox = new BoundingBox(
-					"bassDrumBoundingBox", 345, 183, 440, 324,width,height);
+					"bassDrumBoundingBox", 321, 257, 461, 390,width,height);
 			BoundingBox floorTomBoundingBox = new BoundingBox(
-					"floorTomBoundingBox", 444, 168, 582, 336,width,height);
+					"floorTomBoundingBox", 457, 221, 638, 396,width,height);
 			BoundingBox snareDrumBoundingBox = new BoundingBox(
-					"snareDrumBoundingBox", 268, 141, 362, 213,width,height);
+					"snareDrumBoundingBox", 223, 187, 361, 281,width,height);
 			BoundingBox cymbalBoundingBox = new BoundingBox(
-					"cymbalBoundingBox", 473, 15, 603, 100,width,height);
+					"cymbalBoundingBox", 489, 38, 698, 106,width,height);
 			BoundingBox tomsBoundingBox = new BoundingBox("tomsBoundingBox",
-					290, 72, 480, 152,width,height);
+					267, 71, 521, 204,width,height);
 
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
